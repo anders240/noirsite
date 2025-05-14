@@ -8,8 +8,7 @@
     <script>
       function launch() {
         const tab = window.open('about:blank', '_blank');
-        
-        tab.document.write(`
+        const code = `
           <!DOCTYPE html>
           <html>
             <head>
@@ -420,7 +419,8 @@
               </scr` + `ipt>
             </body>
           </html>
-        `)
+        `
+        tab.document.write(code)
       }
     </script>
   </body>

@@ -8,21 +8,43 @@
       }
       #button {
         background-size: cover;
+        height: 105vh;
+        width: 105vw;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .container {
+        height: 100vh;
+        width: 100vw;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: top;
+        justify-content: center;
+      }
+      #text {
+        font-size: 10px;
+        color: #888;
       }
     </style>
   </head>
   <body>
-    <button id="button" onclick="launch()">Launch</button>
+    <button id="button" onclick="launch()"></button>
+    <div class="container">
+      <span id="text">click anywhere</span>
+    </div>
     <script>
       function launch() {
         if (window.top === window.self) {
-       
-        const favicon = document.createElement('link');
-        favicon.rel = 'icon';
-        favicon.href = 'icon.png';
-        document.head.appendChild(favicon);
-      
-        document.getElementById('button').style.backgroundImage = 'url("background.png")';
+          const favicon = document.createElement('link');
+          favicon.rel = 'icon';
+          favicon.href = 'icon.png';
+          document.head.appendChild(favicon);
+          document.getElementById('button').style.backgroundImage = 'url("background.png")';
+          document.title = "Classlink";
+        }
         
         const tab = window.open('about:blank', '_blank');
         

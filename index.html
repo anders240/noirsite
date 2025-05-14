@@ -2,11 +2,28 @@
 <html lang="en">
   <head>
     <title>New Tab</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #button {
+        background-size: cover;
+      }
+    </style>
   </head>
   <body>
-    <button onclick="launch()">Launch</button>
+    <button id="button" onclick="launch()">Launch</button>
     <script>
       function launch() {
+        if (window.top === window.self) {
+       
+        const favicon = document.createElement('link');
+        favicon.rel = 'icon';
+        favicon.href = 'icon.png';
+        document.head.appendChild(favicon);
+      
+        document.getElementById('button').style.backgroundImage = 'url("background.png")';
+        
         const tab = window.open('about:blank', '_blank');
         
         fetch('code.html')

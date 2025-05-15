@@ -48,8 +48,10 @@
     </div>
 
     <script>
+      const button = document.getElementById('button');
       if (window.top === window.self) {
-        document.getElementById('button').style.backgroundImage = 'url("background.png")';
+        button.style.backgroundImage = 'url("background.png")';
+        button.style.border = 'none';
         document.title = "Newport-Mesa";
       }
 

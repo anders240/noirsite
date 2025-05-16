@@ -53,9 +53,10 @@
       if (query) {
           history.replaceState(null, '', window.location.pathname);
       }
-      
+    
       const button = document.getElementById('button');
       const text = document.getElementById('text');
+    
       if (window.top === window.self) {
         button.style.backgroundImage = 'url("background.png")';
         button.style.border = 'none';
@@ -63,25 +64,30 @@
         text.style.paddingLeft = '28px';
         text.style.color = '#fff';
       }
-
+    
       function launch() {
         text.style.display = 'none';
+    
         const tab = window.open('about:blank', '_blank');
-        
+        if (!tab) {
+          alert("Popup blocked. Please allow pop-ups for this site.");
+          return;
+        }
+    
         fetch('https://anders240.github.io/noirsite/code.html')
           .then(response => response.text())
           .then(html => {
-            const script = `<script>var query = ${JSON.stringify(query)};</scr` + `ipt>`;
-
+            const script = `<script>var query = ${JSON.stringify(query)};<\/script>`;
             tab.document.open();
             tab.document.write(script + html);
             tab.document.close();
           })
           .catch(error => {
-            tab.document.body.innerHTML = "<h2>Failed to load content 😭</h2>";
+            tab.document.open();
+            tab.document.write("<h2>Failed to load content 😭</h2>");
+            tab.document.close();
           });
       }
-
     </script>
   </body>
 </html>

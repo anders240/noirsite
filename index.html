@@ -71,10 +71,10 @@
         fetch('https://anders240.github.io/noirsite/code.html')
           .then(response => response.text())
           .then(html => {
-            const replaced = html.replace('{{QUERY}}', JSON.stringify(query));
-        
+            const script = `<script>var query = ${JSON.stringify(query)};</script>`;
+
             tab.document.open();
-            tab.document.write(replaced);
+            tab.document.write(script + html);
             tab.document.close();
           })
           .catch(error => {

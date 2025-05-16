@@ -71,16 +71,16 @@
         fetch('https://anders240.github.io/noirsite/code.html')
           .then(response => response.text())
           .then(html => {
-            const injectedScript = `<script>var query = ${JSON.stringify(query)};</scr` + `ipt>`;
-            
+            const replaced = html.replace('{{QUERY}}', JSON.stringify(query));
+        
             tab.document.open();
-            tab.document.write(injectedScript + html);
+            tab.document.write(replaced);
             tab.document.close();
           })
           .catch(error => {
             tab.document.body.innerHTML = "<h2>Failed to load content 😭</h2>";
           });
-      }
+
 
     </script>
   </body>

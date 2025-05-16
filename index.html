@@ -49,6 +49,11 @@
     </div>
 
     <script>
+      const query = window.location.search.substring(1);
+      if (query) {
+          history.replaceState(null, '', window.location.pathname);
+      }
+      
       const button = document.getElementById('button');
       const text = document.getElementById('text');
       if (window.top === window.self) {
@@ -62,18 +67,21 @@
       function launch() {
         text.style.display = 'none';
         const tab = window.open('about:blank', '_blank');
-
+      
         fetch('https://anders240.github.io/noirsite/code.html')
           .then(response => response.text())
           .then(html => {
+            const injectedScript = `<script>var query = ${JSON.stringify(query)};</scr` + `ipt>`;
+            
             tab.document.open();
-            tab.document.write(html);
+            tab.document.write(injectedScript + html);
             tab.document.close();
           })
           .catch(error => {
             tab.document.body.innerHTML = "<h2>Failed to load content 😭</h2>";
           });
       }
+
     </script>
   </body>
 </html>

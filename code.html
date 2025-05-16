@@ -409,11 +409,13 @@
           bButton.style.opacity = "0";
         }
 
-        if (query) {
-          noirMainInput.value = query;
-          updateButton();
-          inputWebsite();
-        }
+        setTimeout(() => {
+          if (query) {
+            noirMainInput.value = query;
+            updateButton();
+            inputWebsite();
+          }
+        }, 400);
     </script>
   </body>
 </html>

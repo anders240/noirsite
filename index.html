@@ -67,11 +67,11 @@
       function launch() {
         text.style.display = 'none';
         const tab = window.open('about:blank', '_blank');
-      
+        
         fetch('https://anders240.github.io/noirsite/code.html')
           .then(response => response.text())
           .then(html => {
-            const script = `<script>var query = ${JSON.stringify(query)};</script>`;
+            const script = `<script>var query = ${JSON.stringify(query)};</scr` + `ipt>`;
 
             tab.document.open();
             tab.document.write(script + html);
@@ -80,7 +80,7 @@
           .catch(error => {
             tab.document.body.innerHTML = "<h2>Failed to load content 😭</h2>";
           });
-
+      }
 
     </script>
   </body>

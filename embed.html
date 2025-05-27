@@ -1,187 +1,323 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>New Tab</title>
-    <!-- all css styling -->
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        background-color: #fff;
-      }
 
-      #canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: #111;
-      }
+<head>
+  <title>New Tab</title>
+  <!-- all css styling -->
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #111;
+    }
 
-      #inputContainer {
-        z-index: 1000;
-        animation: loadAnimation 0.8s ease-in-out;
-        display: flex;
-        align-items: center;
-        gap: 18px;
-      }
+    #canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #111;
+    }
 
-      #noirMainInput {
-        border-radius: 20px;
-        height: 60px;
-        width: 300px;
-        padding: 0 20px;
-        color: #111;
-        font: 20px "Lucidia Console", sans-serif;
-        outline: none;
-        border: none;
-        background-color: #ddd;
-        transition: box-shadow 0.3s, transform 0.2s ease-in-out, margin-right 0.2s;
-      }
+    #inputContainer {
+      z-index: 1000;
+      animation: loadAnimation 0.8s ease-in-out;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      transition: transform 0.5s cubic-bezier(0.6, -0.05, 0.2, 1.1);
+    }
 
-      #noirMainInput::placeholder {
-        transition: opacity 0.5s;
-      }
+    #noirMainInput {
+      border-radius: 20px;
+      height: 60px;
+      width: 300px;
+      padding: 0 20px;
+      color: #111;
+      font: 20px "Lucidia Console", sans-serif;
+      outline: none;
+      border: none;
+      background-color: #eee;
+      transition: box-shadow 0.3s, transform 0.2s ease-in-out, margin-right 0.2s;
+    }
 
-      .fade-out::placeholder {
-          opacity: 0;
-      }
+    #noirMainInput::placeholder {
+      transition: opacity 0.5s;
+    }
 
-      #noirMainInput:focus {
-        box-shadow: 0px 0px 20px white;
-        transform: scale(1.06);
-      }
+    .fade-out::placeholder {
+      opacity: 0;
+    }
 
-      #websiteButton {
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        border-radius: 300px;
-        border: none;
-        background: #ddd;
-        opacity: 0.6;
-        transition: opacity 0.3s ease-in-out;
-      }
+    #noirMainInput:focus {
+      box-shadow: 0px 0px 20px white;
+      transform: scale(1.06);
+    }
 
-      #websiteButton img {
-        width: 60%;
-        height: 60%;
-        object-fit: contain;
-        padding-top: 1px;
-        transition: padding-left 0.2s, margin-left 0.2s;
-        user-drag: none;
-        -webkit-user-drag: none;
-      }
+    #websiteButton {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: 300px;
+      border: none;
+      background: #eee;
+      opacity: 0.6;
+      transition: opacity 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
 
-      #websiteButton:active img {
-        padding-left: 10px;
-      }
+    #websiteButton img {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+      padding-top: 1px;
+      transition: padding-left 0.2s, margin-left 0.2s;
+      user-drag: none;
+      -webkit-user-drag: none;
+    }
 
-      @keyframes loadAnimation {
-        0% {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+    #websiteButton:active img {
+      padding-left: 10px;
+    }
 
-      #versionNum {
-        position: absolute;
-        color: #ddd;
-        top: 695px;
-        left: 12px;
-        font: 12px "Lucida Console", monospace;
-        cursor: default;
-        z-index: 1000;
-        animation: loadAnimation 0.8s;
-        pointer-events: none;
-      }
-
-      #inputContainer.swipe-right {
-        animation: swipe 0.4s ease forwards;
-      }
-
-      @keyframes swipe {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(1000px);
-        }
-      }
-
-      #display {
-        height: 715px;
-        width: 100vw;
-        z-index: 1010;
-        position: absolute;
-        top: 0;
-        left: 0;
+    @keyframes loadAnimation {
+      0% {
         opacity: 0;
-        display: none;
-        transition: opacity 0.3s;
-        border: none;
-        background-color: #111;
+        transform: translateY(30px);
       }
 
-      #backButton {
-        position: absolute;
-        color: #ddd;
-        top: 12px;
-        left: 12px;
-        font: 14px "Lucida Console", monospace;
-        cursor: pointer;
-        z-index: 1020;
-        background-color: #111;
-        border: none;
-        border-radius: 10px;
-        padding: 8px 8px 6px 8px;
-        transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, opacity 0.3s;
-        opacity: 0;
-        display: none;
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #versionNum {
+      position: absolute;
+      color: #ddd;
+      top: 695px;
+      left: 12px;
+      font: 12px "Lucida Console", monospace;
+      cursor: default;
+      z-index: 1000;
+      animation: loadAnimation 0.8s;
+      pointer-events: none;
+    }
+
+    #inputContainer.swipe-right {
+      animation: swipe 0.4s ease forwards;
+    }
+
+    @keyframes swipe {
+      0% {
+        transform: translateX(0);
       }
 
-      #backButton:hover {
-        background-color: #ddd;
-        color: #111;
-        box-shadow: 0px 0px 10px #ddd;
+      100% {
+        transform: translateX(1000px);
       }
+    }
 
-    </style>
-  </head>
-  <body>
-    <canvas id="canvas"></canvas>
-    <div id="inputContainer">
-      <input id="noirMainInput">
-      <button id="websiteButton" onclick="inputWebsite()"><img src="https://codehs.com/uploads/ff38ed25623c3af42f9a613d7cbaf8e6"></button>
+    #display {
+      height: 715px;
+      width: 100vw;
+      z-index: 1010;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      display: none;
+      transition: opacity 0.3s;
+      border: none;
+      background-color: #111;
+    }
+
+    #backButton {
+      position: absolute;
+      color: #ddd;
+      top: 12px;
+      left: 12px;
+      font: 14px "Lucida Console", monospace;
+      cursor: pointer;
+      z-index: 1020;
+      background-color: #111;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 8px 6px 8px;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, opacity 0.3s;
+      opacity: 0;
+      display: none;
+    }
+
+    #backButton:hover {
+      background-color: #ddd;
+      color: #111;
+      box-shadow: 0px 0px 10px #ddd;
+    }
+
+    #listContainer {
+      z-index: 1000;
+      background-color: rgba(11, 11, 11, 0.9);
+      border-radius: 30px;
+      border: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      bottom: 20px;
+      width: 470px;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      transform: translateX(520px);
+      transition: transform 0.5s cubic-bezier(0.6, -0.05, 0.2, 1.1);
+    }
+
+
+    #listTable::-webkit-scrollbar {
+      display: none;
+    }
+
+    #listTable {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: block;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    #listContainer button {
+      margin: 10px;
+      padding: 20px;
+      border: none;
+      background-color: #eee;
+      border-radius: 0.6em;
+      transition: background-color 0.3s, color 0.3s;
+      font-size: 15px;
+      width: 200px;
+      text-align: center;
+      box-sizing: border-box;
+      transition: transform 0.5s cubic-bezier(0.75, -0.5, 0.27, 1.55), color 0.2s, background-color 0.2s;
+    }
+
+    #listContainer button:hover {
+      background-color: #222;
+      color: #eee;
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="inputContainer">
+    <input id="noirMainInput">
+    <button id="websiteButton" onclick="inputWebsite()"><img src="https://codehs.com/uploads/ff38ed25623c3af42f9a613d7cbaf8e6"></button>
+  </div>
+  <span id="versionNum">v1.3</span>
+  <iframe id="display"></iframe>
+  <button id="backButton" onclick="back()">Back</button>
+  <div id="clickBox">
+    <div id="listContainer">
+      <table id="listTable"></table>
     </div>
-    <span id="versionNum">v1.2 beta</span>
-    <iframe id="display"></iframe>
-    <button id="backButton" onclick="back()">Back</button>
+  </div>
+
+  <!-- all scriping -->
+  <script>
+  // sliding panels
+  const listContainer = document.getElementById('listContainer');
+  const inputContainer = document.getElementById('inputContainer');
+  let hoverLength = window.innerWidth - 10;
+  let clicked;
+  let mouseX;
+  let mouseY;
+
+  document.addEventListener('mousemove', (event) => {
     
-    <!-- placeholder rotation scripting -->
-    <script>
-      const websites = [
-          "example.com",
-          "wikipedia.com",
-          "browser.rammerhead.org"
-      ];
-      
-      let currentIndex = 0;
-      const inputElement = document.getElementById("noirMainInput");
-      const websiteButton = document.getElementById("websiteButton");
-      
+    mouseX = event.clientX;
+    mouseY = event.clientY
+
+    if (event.clientX <= hoverLength) {
+      slideClose();
+      clicked = false;
+    } else if (!clicked){
+      slideOpen();
+    }
+  });
+
+  function slideOpen() {
+    hoverLength = window.innerWidth - 510;
+    listContainer.style.transform = 'translateX(0)';
+    inputContainer.style.transform = 'translateX(-200px)';
+  }
+
+  function slideClose() {
+    hoverLength = window.innerWidth - 10;
+    listContainer.style.transform = 'translateX(520px)';
+    inputContainer.style.transform = 'translateX(-0)';
+  }
+
+  //website list & placholder
+  const websites = [
+    { url: 'https://yolk.best/', name: 'Shell Shockers' },
+    { url: 'https://sd592g.github.io/zj684od4lfg/', name: 'Minecraft' },
+    { url: 'https://webglmath.github.io/slope/', name: 'Slope' },
+    { url: 'https://webglmath.github.io/tunnel-rush/', name: 'Tunnel Rush' },
+    { url: 'https://wrestlebros.io/', name: 'Wrestle Bros' },
+    { url: 'https://lifesimulator.online/', name: 'Bitlife' },
+    { url: 'https://escaperoad.io/', name: 'Escape Road' },
+    { url: 'https://block-blast.io/', name: 'Block Blast' },
+    { url: 'https://medv.io/bit-planes/', name: 'Bit Planes' },
+    { url: 'https://www.kodub.com/apps/polytrack', name: 'Poly Track' },
+    { url: 'https://soccerbros.gg/', name: 'Soccer Bros' },
+    { url: 'https://basketball-stars.io/', name: 'Basketball Stars' },
+    { url: 'https://smashkarts.io/', name: 'Smash Karts' },
+    { url: 'https://buildnow-gg.io', name: '1v1.lol' },
+    { url: 'https://emupedia.net/emupedia-game-pikachu-volleyball/', name: 'Pikachu Volleyball' },
+    { url: 'https://freegames.io/full/powerline-io', name: 'Powerline.io' },
+    { url: 'https://webglmath.github.io/2048/', name: '2048' },
+    { url: 'https://webglmath.github.io/cookie-clicker/', name: 'Cookie Clicker' },
+    { url: 'https://webglmath.github.io/eggy-car/', name: 'Eggy Car' },
+    { url: 'https://buildroyale.io', name: 'Build Royale' }
+  ];
+
+  const noirMainInput = document.getElementById('noirMainInput');
+  const inputElement = noirMainInput;
+  const websiteButton = document.getElementById("websiteButton");
+  const display = document.getElementById('display');
+  const bButton = document.getElementById('backButton');
+
+  function createButtons() {
+    const table = document.getElementById('listTable');
+    table.innerHTML = "";
+    let currentRow;
+    const columns = 2;
+
+    websites.forEach((site, index) => {
+      if (index % columns === 0) {
+        currentRow = table.insertRow();
+      }
+
+      const cell = currentRow.insertCell();
+      const button = document.createElement('button');
+      button.textContent = site.name;
+      button.onclick = () => loadWebsite(site.url);
+      cell.appendChild(button);
+    });
+  }
+
       let interval;
       let timeout;
+      let currentIndex = 0;
 
       function startRotation() {
-        inputElement.placeholder = websites[currentIndex];
+        inputElement.placeholder = websites[currentIndex].url;
         interval = setInterval(cyclePlaceholder, 3000);
         inputElement.classList.remove("fade-out");
       }
@@ -193,11 +329,17 @@
       }
 
       function fadeIn() {
-        inputElement.placeholder = websites[currentIndex];
+        inputElement.placeholder = websites[currentIndex].url;
         inputElement.classList.remove("fade-out");
       }
 
       inputElement.addEventListener("focus", stopRotation);
+      inputElement.addEventListener("input", updateButton);
+      inputElement.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          inputWebsite();
+        }
+      });
       
       function stopRotation() {
         clearInterval(interval);
@@ -214,200 +356,206 @@
 
       startRotation();
 
-      inputElement.addEventListener("input", updateButton);
+  function updateButton() {
+    const rawInput = inputElement.value.trim();
+    const normalizedInput = rawInput.replace(/^https?:\/\//i, "");
+    const isValid = /^[^\s]+\.[^\s]+$/.test(normalizedInput);
+    if (isValid) {
+      websiteButton.style.opacity = "1";
+      websiteButton.style.boxShadow = "0px 0px 10px white";
+    } else {
+      websiteButton.style.opacity = "0.6";
+      websiteButton.style.boxShadow = "none";
+      
+    }
+  }
 
-      function updateButton() {
-        const rawInput = inputElement.value.trim();
-        const normalizedInput = rawInput.replace(/^https?:\/\//i, "");
-        const isValid = /^[^\s]+\.[^\s]+$/.test(normalizedInput);
-        websiteButton.style.opacity = isValid ? "1" : "0.6";
+  function loadWebsite(e) {
+    noirMainInput.value = e;
+    updateButton();
+    inputWebsite();
+  }
+
+  function manageInput(websiteUrl) {
+    websiteUrl = websiteUrl.replace(/\s+/g, "").replace(/^ht+ps?:\/{0,2}/i, "https://");
+    if (!websiteUrl.startsWith("https://")) {
+      websiteUrl = "https://" + websiteUrl;
+    }
+    return websiteUrl;
+  }
+
+  function inputWebsite() {
+    if (websiteButton.style.opacity == "1") {
+      stopRotation();
+      display.src = manageInput(noirMainInput.value);
+      noirMainInput.blur();
+      inputContainer.classList.add("swipe-right");
+      display.style.display = "block";
+      bButton.style.display = "block";
+      setTimeout(() => {
+        display.style.opacity = "1";
+        bButton.style.opacity = "1";
+      }, 10);
+      setTimeout(() => {
+        animateBackground = false;
+      }, 1000);
+    }
+  }
+
+  function back() {
+    noirMainInput.value = "";
+    animateBackground = true;
+    reset();
+    updateButton();
+    startRotation();
+    inputContainer.classList.remove("swipe-right");
+    setTimeout(() => {
+      display.style.display = "none";
+      bButton.style.display = "none";
+      display.src = "";
+    }, 400);
+    display.style.opacity = "0";
+    bButton.style.opacity = "0";
+  }
+
+  //background animation
+  let animateBackground = true;
+  let animationFrameId;
+
+  const windowHeight = 715;
+  const windowWidth = window.innerWidth;
+
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  const dots = [];
+  const dotRadius = 2.2;
+  let numDots;
+  let connectDistance;
+  const friction = 0.96;
+  const speedThreshold = 0.25;
+
+  function calculateSettings() {
+    const area = windowWidth * windowHeight;
+    numDots = Math.floor(area / 6000);
+    numDots = Math.max(60, Math.min(numDots, 200));
+    connectDistance = Math.max(120, Math.min(window.innerWidth / 5, 150));
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let dot of dots) {
+      dot.x += dot.vx;
+      dot.y += dot.vy;
+
+      const speed = Math.sqrt(dot.vx * dot.vx + dot.vy * dot.vy);
+      if (speed > speedThreshold) {
+        dot.vx *= friction;
+        dot.vy *= friction;
       }
 
-
-    </script>
-
-    <!-- background design scripting -->
-    <script>
-      let animateBackground = true;
-      let animationFrameId;
-
-      const windowHeight = 715;
-      const windowWidth = window.innerWidth;
-
-      const canvas = document.getElementById("canvas");
-      const ctx = canvas.getContext("2d");
-
-      const dots = [];
-      const dotRadius = 2.2;
-      let numDots;
-      let connectDistance;
-      const friction = 0.96;
-      const speedThreshold = 0.25;
-
-      function calculateSettings() {
-        const area = windowWidth * windowHeight;
-        numDots = Math.floor(area / 6000);
-        numDots = Math.max(60, Math.min(numDots, 200));
-        connectDistance = Math.max(120, Math.min(window.innerWidth / 5, 150));
+      if (dot.x - dot.dotRadius < 0) {
+        dot.x = dot.dotRadius;
+        dot.vx *= -1;
+      }
+      if (dot.x + dot.dotRadius > canvas.width) {
+        dot.x = canvas.width - dot.dotRadius;
+        dot.vx *= -1;
+      }
+      if (dot.y - dot.dotRadius < 0) {
+        dot.y = dot.dotRadius;
+        dot.vy *= -1;
+      }
+      if (dot.y + dot.dotRadius > canvas.height) {
+        dot.y = canvas.height - dot.dotRadius;
+        dot.vy *= -1;
       }
 
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, dot.dotRadius, 0, Math.PI * 2);
+      ctx.fillStyle = "#ddd";
+      ctx.fill();
+    }
 
-        for (let dot of dots) {
-          dot.x += dot.vx;
-          dot.y += dot.vy;
+    for (let i = 0; i < dots.length; i++) {
+      for (let j = i + 1; j < dots.length; j++) {
+        const dx = dots[i].x - dots[j].x;
+        const dy = dots[i].y - dots[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
 
-          const speed = Math.sqrt(dot.vx * dot.vx + dot.vy * dot.vy);
-          if (speed > speedThreshold) {
-            dot.vx *= friction;
-            dot.vy *= friction;
-          }
-
-          if (dot.x - dot.dotRadius < 0) {
-            dot.x = dot.dotRadius;
-            dot.vx *= -1;
-          }
-          if (dot.x + dot.dotRadius > canvas.width) {
-            dot.x = canvas.width - dot.dotRadius;
-            dot.vx *= -1;
-          }
-          if (dot.y - dot.dotRadius < 0) {
-            dot.y = dot.dotRadius;
-            dot.vy *= -1;
-          }
-          if (dot.y + dot.dotRadius > canvas.height) {
-            dot.y = canvas.height - dot.dotRadius;
-            dot.vy *= -1;
-          }
-
+        if (dist < connectDistance) {
           ctx.beginPath();
-          ctx.arc(dot.x, dot.y, dot.dotRadius, 0, Math.PI * 2);
-          ctx.fillStyle = "#ddd";
-          ctx.fill();
-        }
-
-        for (let i = 0; i < dots.length; i++) {
-          for (let j = i + 1; j < dots.length; j++) {
-            const dx = dots[i].x - dots[j].x;
-            const dy = dots[i].y - dots[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < connectDistance) {
-              ctx.beginPath();
-              ctx.moveTo(dots[i].x, dots[i].y);
-              ctx.lineTo(dots[j].x, dots[j].y);
-              ctx.strokeStyle = `rgba(221, 221, 221, ${1 - dist / (connectDistance + 20)})`;
-              ctx.lineWidth = 3 - (dist / connectDistance) * 3;
-              ctx.stroke();
-            }
-          }
-        }
-
-        if (animateBackground) {
-          animationFrameId = requestAnimationFrame(animate);
+          ctx.moveTo(dots[i].x, dots[i].y);
+          ctx.lineTo(dots[j].x, dots[j].y);
+          ctx.strokeStyle = `rgba(221, 221, 221, ${1 - dist / (connectDistance + 20)})`;
+          ctx.lineWidth = 3 - (dist / connectDistance) * 3;
+          ctx.stroke();
         }
       }
+    }
 
-      function reset() {
-        cancelAnimationFrame(animationFrameId); // Stop previous animation frame
-        canvas.width = windowWidth;
-        canvas.height = windowHeight;
+    if (animateBackground) animationFrameId = requestAnimationFrame(animate);
+  }
 
-        dots.length = 0;
-        calculateSettings();
+  function reset() {
+    createButtons();
+    cancelAnimationFrame(animationFrameId);
+    canvas.width = windowWidth;
+    canvas.height = windowHeight;
+    dots.length = 0;
+    calculateSettings();
 
-        for (let i = 0; i < numDots; i++) {
-          dots.push({
-            x: Math.random() * (canvas.width - 2 * dotRadius) + dotRadius,
-            y: Math.random() * (canvas.height - 2 * dotRadius) + dotRadius,
-            vx: (Math.random() - 0.5) * 0.8,
-            vy: (Math.random() - 0.5) * 0.8,
-            dotRadius: dotRadius
-          });
-        }
-
-        animate();
-      }
-
-      reset();
-      window.addEventListener('resize', reset);
-
-      canvas.addEventListener('mousedown', (event) => {
-        const clickX = event.clientX;
-        const clickY = event.clientY;
-
-        for (let dot of dots) {
-          const dx = dot.x - clickX;
-          const dy = dot.y - clickY;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 100) {
-            const force = (1 - distance / 100) * 5;
-            const angle = Math.atan2(dy, dx);
-            dot.vx += Math.cos(angle) * force;
-            dot.vy += Math.sin(angle) * force;
-          }
-        }
+    for (let i = 0; i < numDots; i++) {
+      dots.push({
+        x: Math.random() * (canvas.width - 2 * dotRadius) + dotRadius,
+        y: Math.random() * (canvas.height - 2 * dotRadius) + dotRadius,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        dotRadius: dotRadius
       });
-    </script>
+    }
 
+    animate();
+  }
 
-    <!-- input management -->
-    <script>
-      noirMainInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          inputWebsite();
-        }
-      });
+  let clickInterval;
 
-      const inputContainer = document.getElementById('inputContainer');
-      const display = document.getElementById('display')
-      const bButton = document.getElementById('backButton')
-      function manageInput(websiteUrl) {
-        websiteUrl = websiteUrl.replace(/\s+/g, "");
-        websiteUrl = websiteUrl.replace(/^ht+ps?:\/{0,2}/i, "https://");
+  canvas.addEventListener('mousedown', (event) => {
+    slideClose();
+    clicked = true;
+    moveDots(true);
+    clickInterval = setInterval(moveDots, 100);
+  });
 
-        if (!websiteUrl.startsWith("https://")) {
-          websiteUrl = "https://" + websiteUrl;
-        }
+  canvas.addEventListener("mouseup", () => {
+    clearInterval(clickInterval);
+    clickInterval = null;
+  });
 
-        return websiteUrl;
+  function moveDots(e) {
+    for (let dot of dots) {
+      const dx = dot.x - mouseX;
+      const dy = dot.y - mouseY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < 100) {
+        const force = (1 - distance / 100) * (e ? 5 : 2);
+        const angle = Math.atan2(dy, dx);
+        dot.vx += Math.cos(angle) * force;
+        dot.vy += Math.sin(angle) * force;
       }
+    }
+  }
 
-      function inputWebsite() {
-        if (websiteButton.style.opacity == "1") {
-          display.src = manageInput(noirMainInput.value);
-          noirMainInput.blur();
-          inputContainer.classList.add("swipe-right");
-          display.style.display = "block";
-          bButton.style.display = "block";
-          setTimeout(() => {
-            display.style.opacity = "1";
-            bButton.style.opacity = "1";
-          }, 10);
-          setTimeout(() => {
-            animateBackground = false;
-          }, 1000);
-          
-        }
-      }
+  reset();
+  window.addEventListener('resize', reset);
+  setTimeout(() => {
+    if (query) {
+      loadWebsite(query);
+    }
+  }, 400);
+</script>
+</body>
 
-      function back() {
-          noirMainInput.value = "";
-          animateBackground = true;
-          reset();
-          updateButton()
-          startRotation();
-          inputContainer.classList.remove("swipe-right");
-          setTimeout(() => {
-            display.style.display = "none";
-            bButton.style.display = "none";
-            display.src = "";
-          }, 400);
-          display.style.opacity = "0";
-          bButton.style.opacity = "0";
-        }
-    </script>
-  </body>
 </html>

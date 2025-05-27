@@ -52,7 +52,6 @@
       let query = decodeURIComponent(window.location.search.slice(1));
     
       if (query) {
-        // Remove query from the visible URL
         history.replaceState(null, '', window.location.pathname);
       }
     

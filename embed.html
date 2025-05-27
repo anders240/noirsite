@@ -103,7 +103,10 @@
       cursor: default;
       z-index: 1000;
       animation: loadAnimation 0.8s;
-      pointer-events: none;
+    }
+
+    #versionNum:hover {
+      text-decoration-line: underline;
     }
 
     #inputContainer.swipe-right {
@@ -219,7 +222,7 @@
     <input id="noirMainInput">
     <button id="websiteButton" onclick="inputWebsite()"><img src="https://codehs.com/uploads/ff38ed25623c3af42f9a613d7cbaf8e6"></button>
   </div>
-  <span id="versionNum">v1.3</span>
+  <span id="versionNum" onclick="launch()">v1.3</span>
   <iframe id="display"></iframe>
   <button id="backButton" onclick="back()">Back</button>
   <div id="clickBox">
@@ -230,6 +233,27 @@
 
   <!-- all scriping -->
   <script>
+    function launch() {
+      const tab = window.open('about:blank', '_blank');
+      if (!tab) {
+        alert("Popup blocked. Please allow pop-ups for this site.");
+        return;
+      }
+  
+      fetch('https://anders240.github.io/noirsite/code.html')
+        .then(response => response.text())
+        .then(html => {
+          tab.document.open();
+          tab.document.write(html);
+          tab.document.close();
+        })
+        .catch(error => {
+          tab.document.open();
+          tab.document.write("<h2>Failed to load content 😭</h2>");
+          tab.document.close();
+        });
+    }
+    
   // sliding panels
   const listContainer = document.getElementById('listContainer');
   const inputContainer = document.getElementById('inputContainer');
